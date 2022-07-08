@@ -12,10 +12,11 @@ import {Colors} from '../constants/colors';
 import {MainStackParamList} from './MainScreen';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const user = {
-  username: 'admin',
-  password: 'admin',
+  username: 'Admin',
+  password: 'Admin',
 };
 
 type authScreenProp = NativeStackNavigationProp<MainStackParamList, 'Login'>;
@@ -26,7 +27,7 @@ const LoginScreen = () => {
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
-  const signIn = (username: string, password: string) => {
+  const signIn = async (username: string, password: string) => {
     if (username === '' || password === '') {
       return Alert.alert('Error', 'Please enter your username and password.', [
         {
@@ -38,7 +39,8 @@ const LoginScreen = () => {
     }
 
     if (username === user.username && password === user.password) {
-      console.log(navigation);
+      await AsyncStorage.setItem('isLoggedIn', 'true');
+
       return navigation.replace('Home');
     } else {
       return Alert.alert('Error', 'Username or password wrong.', [
