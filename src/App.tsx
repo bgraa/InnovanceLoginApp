@@ -10,7 +10,6 @@ const App = () => {
     const getUser = async () => {
       await UserStore.getUser();
     };
-
     getUser();
   }, []);
 
