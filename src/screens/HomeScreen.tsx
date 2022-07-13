@@ -58,7 +58,7 @@ const HomeScreen = () => {
                   autoCorrect={false}
                 />
                 {errors.name && touched.name && (
-                  <Text style={{color: 'red'}}>{errors.name}</Text>
+                  <Text style={{color: Colors.RED}}>{errors.name}</Text>
                 )}
                 <TextInput
                   style={styles.input}
