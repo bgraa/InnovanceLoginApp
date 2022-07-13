@@ -1,13 +1,24 @@
-import React from 'react';
-import {StatusBar} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import MainScreen from './screens/MainScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {observer} from 'mobx-react';
+import React, {useEffect} from 'react';
+import UserStore from './mobx/UserStore';
+import AuthStackNavigator from './navigation/AuthStack';
+import MainStackNavigator from './navigation/MainStack';
 
-export default function App() {
+const App = () => {
+  useEffect(() => {
+    const getUser = async () => {
+      await UserStore.getUser();
+    };
+
+    getUser();
+  }, []);
+
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={'dark-content'} />
-      <MainScreen />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      {UserStore.user ? <MainStackNavigator /> : <AuthStackNavigator />}
+    </NavigationContainer>
   );
-}
+};
+
+export default observer(App);

@@ -9,21 +9,14 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../constants/colors';
-import {MainStackParamList} from './MainScreen';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserStore from '../mobx/UserStore';
 
 const user = {
   username: 'Admin',
   password: 'Admin',
 };
 
-type authScreenProp = NativeStackNavigationProp<MainStackParamList, 'Login'>;
-
 const LoginScreen = () => {
-  const navigation = useNavigation<authScreenProp>();
-
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
@@ -39,9 +32,7 @@ const LoginScreen = () => {
     }
 
     if (username === user.username && password === user.password) {
-      await AsyncStorage.setItem('isLoggedIn', 'true');
-
-      return navigation.replace('Home');
+      await UserStore.login(user);
     } else {
       return Alert.alert('Error', 'Username or password wrong.', [
         {
