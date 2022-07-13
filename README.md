@@ -10,7 +10,7 @@ Then clone this repository. open the VS Code and npm install on terminal.
 
 ## User Information
 
-- username : Admin,
+- username : Admin
 - password : Admin
 
 # Used Technology
